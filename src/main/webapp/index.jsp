@@ -8,6 +8,7 @@
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css"/>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" type="text/javascript"></script>
 	<script src="javascript/GSVPano.js"></script>
 	<script src="javascript/Hyperlapse.js"></script>
 	<script src="javascript/three.min.js"></script>
