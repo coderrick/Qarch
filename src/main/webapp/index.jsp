@@ -86,12 +86,13 @@
 
     * {
         transition: 1s all ease;
-        color: white;
+        color: black;
     }
 
     table {
         margin-top: 10em;
         border: 1px solid #455A64;
+        
     }
 
     span {
@@ -158,7 +159,7 @@
     td {
         padding-top: 4px;
         padding-bottom: 4px;
-        color:black;
+        border: none;
     }
 
     h1 {
