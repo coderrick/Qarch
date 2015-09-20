@@ -1,68 +1,43 @@
-<%@ page language="java" contentType="text/html" pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.google.appengine.api.users.User" %>
+<%@ page import="com.google.appengine.api.users.UserService" %>
+<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Registration</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    <link rel="stylesheet" href="http://purecss.io/combo/1.18.13?/css/layouts/marketing.css">
-    <link rel="stylesheet" href="main.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="main.js"></script>
+    <title>Qarch</title>
+    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script src="javascript/three.min.js"></script>
+    <script src="javascript/GSVPano.js"></script>
+    <script src="javascript/Hyperlapse.js"></script>
+    <script src="javascript/primary.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato:300|Roboto' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <h1>Qarch</h1>
-    <form method="POST" action="registration.jsp">
-        <center>
-            <table border="1" width="30%" cellpadding="5">
-                <thead>
-                    <tr>
-                        <th colspan="2" id="header">Sign up here</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>First Name</td>
-                        <td><input type="text" name="fname" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td>Last Name</td>
-                        <td><input type="text" name="lname" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td><input type="text" name="email" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td>User Name</td>
-                        <td><input type="text" name="uname" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td>Password</td>
-                        <td><input type="password" name="pass" value="" /></td>
-                    </tr>
-                    <tr>
-                        <td><input type="submit" value="Submit" class="buttons" /></td>
-                        <td><input type="reset" value="Reset" class="buttons"/></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" id="bottom">
-                            Already registered? <div class="svg-wrapper">
-                                <svg height="30" width="125" xmlns="http://www.w3.org/2000/svg">
-                                    <rect id="shape" height="30" width="125" />
-                                    <div id="text">
-                                        <a href="index.jsp"><span></span>Log in</a>
-                                    </div>
-                                </svg>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </center>
-    </form>
+    <div id="outer_wrapper">
+        <div id="directions-panel"></div>
+        <div id="box" style="display:inline-flex;">
+            <div id="map"></div>
+            <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+            <div id="pano"></div>
+
+        </div>
+        <div id="buttons">
+            <button id="load">Load</button>
+            <button id="play">Start</button>
+            <button id="stop">Stop</button>
+            <button id="next">Next</button>
+            <button id="prev">Prev</button>
+        </div>
+        <h3>Load first and then adjust points</h3>
+        <div id="test"> <div id="pano"></div></div>
+    </div>
+    <!-- End of the second page -->
 </body>
 </html>
 
@@ -74,24 +49,14 @@
         background-position: center;
         overflow-x: hidden;
         font-family: 'Lato','Century Gothic',sans-serif;
-        background-color: #455A64;
-        font-weight: bold;
-        color:white;
     }
 
-    #header {
-        padding-top: 10px;
-        padding-bottom: 10px;
+    #directions-panel {
+        margin-top: 2em;
     }
 
     * {
-        transition: 1s all ease;
-        color: white;
-    }
-
-    table {
-        margin-top: 10em;
-        border: 1px solid #455A64;
+        transition: none;
     }
 
     span {
@@ -102,70 +67,72 @@
         left: 0;
     }
 
-    .buttons {
-        color: white;
-        background-color: #455A64;
-        border: none;
-        font-weight: bolder;
-    }
-
-    .buttons:hover {
-        background-color:#526c79;
-    }
-
-    #bottom {
-        text-align:center;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    .svg-wrapper {
-        margin-left: 8px;
-        margin-top: 0;
+    #outer_wrapper {
+        background-color: white;
+        height: 100%;
+        width: 100%;
         position: relative;
-        width: 125px;
-        height: 30px;
-        display: inline-block;
     }
 
-    #shape {
-        stroke-width: 4px;
-        fill: transparent;
-        stroke: #E8CD15;
-        stroke-dasharray: 85 400;
-        stroke-dashoffset: -174;
+    #pano {
+        margin-left: 12px;
+        background-image: url("http://sriajith.info/wp-content/uploads/2015/07/google-maps-banner-2_0.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-repeat: no-repeat;
+        -ms-background-size: contain;
+        background-size: contain;
+        background-position: center;
     }
 
-    #text {
-        margin-top: -25px;
+    #buttons {
+        margin-top: 10px;
         text-align: center;
+        float: none;
     }
 
-        #text a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
+        #buttons button {
+            margin-left: 1em;
+            margin-right: 1em;
+            background-color: lightgrey;
+            border: 3px solid #455A64;
+            border-radius: 5px;
+            text-align: center;
         }
 
-    .svg-wrapper:hover #shape {
-        stroke-dasharray: 50 0;
-        stroke-width: 3px;
-        stroke-dashoffset: 0;
-        stroke: #06D6A0;
+        #test {
+            display:none;
+        }
+
+    #map {
+        width: 500px;
+        height: 500px;
+       
+        padding: 0;
+        margin-left: 10px;
     }
 
-    td {
-        padding-top: 4px;
-        padding-bottom: 4px;
-    }
-
-    h1 {
+    h3 {
         text-align: center;
-        font-weight: bolder;
-        font-size: 3.5em;
-        margin-top: 2em;
-        margin-bottom: -2em;
-        color:white;
-        font-weight: 900;
+    }
+
+    @media screen and (max-width: 1000px) {
+
+        #test {
+            display:block;
+        }
+        #map {
+            width:100vw;
+            height: 80vh;
+            margin: 0;
+            padding: 0
+        }
+
+        #pano {
+            width:100vw;
+            height: 80vw;
+            margin:0;
+
+        }
     }
 </style>
