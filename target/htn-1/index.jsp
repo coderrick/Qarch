@@ -10,8 +10,8 @@
 <head> 
 	<title>Qarch</title> 
 	<link rel="stylesheet" type="text/css" href="stylesheets/main.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" type="text/javascript"></script> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> 
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
 	<script src="javascript/three.min.js"></script>
 	<script src="javascript/GSVPano.js"></script>
 	<script src="javascript/Hyperlapse.js"></script>
@@ -20,6 +20,7 @@
 <body > 
     <div id="directions-panel"></div>
 	<div id="box" style="display:inline-flex;">
+		<input id="pac-input" class="controls" type="text" placeholder="Search Box">
 		<div id="pano" style="margin-left:12px;"></div>
 		<div id="map" style="width: 400px; height: 400px; float: left; padding: 0;"></div>
 	</div>	

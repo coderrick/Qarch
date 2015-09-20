@@ -8,6 +8,7 @@ var somewhere = new google.maps.LatLng(39.98017843488709, -75.15751361846924);
 var map;
 //console.log("temple " + TempleUniversity.getPosition());
 function initialize() {
+
 	hyper = {
 			'start' : "39.98320375131727, -75.15682697296143",
 			'end'   : "39.98017843488709, -75.15751361846924"
@@ -50,6 +51,42 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
   directionsDisplay.setMap(map);
   directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+  
+  // Create the search box and link it to the UI element.
+  var input = document.getElementById('pac-input');
+  var searchBox = new google.maps.places.SearchBox(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  
+  google.maps.event.addListener(searchBox, 'places_changed', function () {
+		var markers = [];
+        var places = searchBox.getPlaces();
+
+        for (var i = 0, marker; marker = markers[i]; i++) {
+            marker.setMap(null);
+        }
+
+        markers = [];
+        var bounds = new google.maps.LatLngBounds();
+
+        for (var i = 0, place; place = places[i]; i++) {
+
+            // Create a marker for each place.
+            var marker = new google.maps.Marker({
+                map: map,
+                title: place.name,
+                position: place.geometry.location
+            });
+
+            markers.push(marker);
+
+            bounds.extend(place.geometry.location);
+        }
+
+        map.fitBounds(bounds);
+    });
+
+
+  // [END region_getplaces]
 
   google.maps.event.addListener(directionsDisplay, 'directions_changed', function() {
 	/*console.log("new start coord = "+ TempleUniversity.lat() + " : "+ TempleUniversity.lng());
@@ -87,7 +124,7 @@ function calcRoute() {
 			console.log(status);
 		}					
 	})	
-  
+
   //console.log("The: " + somewhere.position.lat());
 }
 google.maps.event.addDomListener(window, 'load', initialize);
