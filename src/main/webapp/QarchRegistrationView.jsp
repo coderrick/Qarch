@@ -13,7 +13,7 @@
     <link href='http://fonts.googleapis.com/css?family=Lato:300|Roboto' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <h1>Quarch</h1>
+    <h1>Qarch</h1>
     <form method="POST" action="registration.jsp">
         <center>
             <table border="1" width="30%" cellpadding="5">
