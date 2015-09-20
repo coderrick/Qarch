@@ -53,7 +53,7 @@
                                 <svg height="30" width="125" xmlns="http://www.w3.org/2000/svg">
                                     <rect id="shape" height="30" width="125" />
                                     <div id="text">
-                                        <a href="index.jsp"><span></span>Log in</a>
+                                        <a href="QarchRegistrationView.jsp"><span></span>Log in</a>
                                     </div>
                                 </svg>
                             </div>
@@ -146,7 +146,8 @@
             text-decoration: none;
             font-weight: 600;
         }
-
+    
+    
     .svg-wrapper:hover #shape {
         stroke-dasharray: 50 0;
         stroke-width: 3px;
@@ -157,6 +158,7 @@
     td {
         padding-top: 4px;
         padding-bottom: 4px;
+        color:black;
     }
 
     h1 {
