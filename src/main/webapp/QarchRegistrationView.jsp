@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Qarch</title>
-    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+    <!--<link rel="stylesheet" type="text/css" href="stylesheets/main.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
     <script src="javascript/three.min.js"></script>
