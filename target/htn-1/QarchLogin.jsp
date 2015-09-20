@@ -13,7 +13,7 @@
     if (rs.next()) {
         session.setAttribute("userid", userid);
         //out.println("welcome " + userid);
-        //out.println("<a href='logout.jsp'>Log out</a>");
+        //out.println("<a href='QarchRegistrationLogout.jsp'>Log out</a>");
         response.sendRedirect("success.jsp");
     } else {
         out.println("Invalid password <a href='index.jsp'>try again</a>");

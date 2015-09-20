@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class GuestbookServlet extends HttpServlet {
+public class indexServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws IOException {
@@ -32,5 +32,10 @@ public class GuestbookServlet extends HttpServlet {
         resp.sendRedirect(userService.createLoginURL(req.getRequestURI()));
       }
     }
+  }
+  public void doPost(HttpServletRequest req, HttpServletResponse resp){
+	String latlng = req.getParameter("lat");
+	System.out.println("output: "+ latlng);
+	System.out.println("Testing");
   }
 }

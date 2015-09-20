@@ -1,4 +1,4 @@
-<%@ page import ="java.util.*,java.io.*,java.sql.*,com.credensys.general.*" %>
+<%@ page import ="java.util.*,java.io.*,java.sql.*" %>
 <%@ page language="java" contentType="text/html" pageEncoding="ISO-8859-1" %>
 
 <%
@@ -17,7 +17,7 @@
     int i = st.executeUpdate("insert into m_users(first_name, last_name, email, uname, pass, regdate) values ('" + fname + "','" + lname + "','" + email + "','" + user + "','" + pwd + "', CURDATE())");
     if (i > 0) {
         //session.setAttribute("userid", user);
-        response.sendRedirect("welcome.jsp");
+        response.sendRedirect("QarchWelcomView.jsp");
        // out.print("Registration Successfull!"+"<a href='index.jsp'>Go to Login</a>");
     } else {
         response.sendRedirect("index.jsp");
