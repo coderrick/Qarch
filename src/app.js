@@ -31,9 +31,27 @@ simply.text({
 function locationSuccess(pos) {
   console.log('Got gps data, now sending');
   GPSSending.open(null, URL);
-  GPSSending.send('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
+  GPSSending.send('lat=' + pos.coords.latitude + ',lon= ' + pos.coords.longitude);
+  simply.text({
+    title: 'Qarch',
+    body: 'GPS position sent',
+  }, true);
+  simply.vibe('double');
 }
 
 function locationError(err) {
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.vibe('long');
+  simply.text({
+    title: 'Qarch',
+    body: 'Error: Please ensure \'high accuracy\' gps mode',
+  }, true);
   console.log('location error (' + err.code + '): ' + err.message);
 }
